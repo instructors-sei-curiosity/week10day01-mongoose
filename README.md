@@ -904,7 +904,7 @@ var StudentSchema = new Schema({
 
 ## Homework
 
-After this class you should be able to complete [Emergency Compliment](https://github.com/ga-wdi-exercises/compliment-express) and Part I of [YUM](https://github.com/ga-wdi-exercises/yum).
+After this class you should be able to complete Part I of [YUM](https://github.com/instructors-sei-curiosity/hw-week10day01-02-mongoose-express).
 
 ## Additional Resources
 
