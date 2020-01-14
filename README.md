@@ -133,12 +133,12 @@ Mongoose will provide us with the similar functionality to interact with MongoDB
 Here's an example of some Mongoose code pulled from  [their documentation](http://mongoosejs.com).
 
 ```js
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 
-var Cat = mongoose.model('Cat', { name: String });
+let Cat = mongoose.model('Cat', { name: String });
 
-var kitty = new Cat({ name: 'Zelda' });
+let kitty = new Cat({ name: 'Zelda' });
 
 kitty.save(function (err) {
   if (err) // { do something }
@@ -190,7 +190,7 @@ In order to have access to `mongoose` in our application, we need to explicitly 
 ```js
 // in the db/schema.js
 
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/students');
 ```
 
@@ -199,11 +199,11 @@ The name above `students` will be the name of the app's Mongo database. A cool f
 ```js
 // in the db/schema.js
 
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/students');
 
-// Now that we are connected, let's save that connection to the database in a variable. We are just doing this to keep our code DRY.
-var db = mongoose.connection;
+// Now that we are connected, let's save that connection to the database in a letiable. We are just doing this to keep our code DRY.
+let db = mongoose.connection;
 
 // Will log an error if db can't connect to MongoDB
 db.on('error', function(err) {
@@ -249,9 +249,9 @@ Here's an example of a Mongoose schema...
 // in the db/schema.js
 
 // First, we instantiate a namespace for our Schema constructor defined by mongoose.
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 
-var StudentSchema = new Schema({
+let StudentSchema = new Schema({
   name: String,
   age: Number
 });
@@ -269,15 +269,15 @@ var StudentSchema = new Schema({
 ```js
 // db/schema.js
 
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 
 // First, we instantiate a namespace for our Schema constructor defined by mongoose.
-var StudentSchema = new Schema({
+let StudentSchema = new Schema({
   name: String,
   age: Number
 });
 
-var StudentModel = mongoose.model("Student", StudentSchema);
+let StudentModel = mongoose.model("Student", StudentSchema);
 ```
 
 `.model()` makes a copy of the schema.
@@ -323,19 +323,19 @@ In Mongoose, we create this relationship by using **embedded documents**.
 ```js
 // in the db/schema.js
 
-var ProjectSchema = new Schema({
+let ProjectSchema = new Schema({
   title: String,
   unit: String
 });
 
-var StudentSchema = new Schema({
+let StudentSchema = new Schema({
   name: String,
   age: Number,
   projects: [ProjectSchema]
 });
 
-var ProjectModel = mongoose.model("Project", ProjectSchema);
-var StudentModel = mongoose.model("Student", StudentSchema);
+let ProjectModel = mongoose.model("Project", ProjectSchema);
+let StudentModel = mongoose.model("Student", StudentSchema);
 ```
 > The **projects key** in your `StudentSchema` document, will contain a special array that has specific methods that work with embedded documents.
 >
@@ -366,7 +366,7 @@ First let's create an instance of our Student model. Below is an example that de
 // in the db/schema.js
 
 // First we create a new student. It's just like generating a new instance of a constructor function!
-var frankie = new StudentModel({ name: "Frankie P.", age: 30 });
+let frankie = new StudentModel({ name: "Frankie P.", age: 30 });
 
 // Then we save it to the database using .save
 
@@ -417,8 +417,8 @@ Next, let's create a Project...
 ```js
 // db/schema.js
 
-var anna = new StudentModel({ name: "Anna", age: 28 });
-var project1 = new ProjectModel({ title: "memory game", unit: "JS" });
+let anna = new StudentModel({ name: "Anna", age: 28 });
+let project1 = new ProjectModel({ title: "memory game", unit: "JS" });
 
 // Now we add that project to a student's collection / array of projects.
 anna.projects.push(project1);
@@ -465,11 +465,11 @@ And add the following to `db/seeds.js`...
 ```js
 // in the db/seeds.js
 
-var mongoose = require('mongoose');
-var Schema = require("./schema.js");
+let mongoose = require('mongoose');
+let Schema = require("./schema.js");
 
-var StudentModel = Schema.StudentModel;
-var ProjectModel = Schema.ProjectModel;
+let StudentModel = Schema.StudentModel;
+let ProjectModel = Schema.ProjectModel;
 ```
 
 Now let's call some methods in `db/seeds.js` that will populate our database...
@@ -477,11 +477,11 @@ Now let's call some methods in `db/seeds.js` that will populate our database...
 ```js
 // in the db/seeds.js
 
-var mongoose = require('mongoose');
-var Schema = require("./schema.js");
+let mongoose = require('mongoose');
+let Schema = require("./schema.js");
 
-var StudentModel = Schema.StudentModel;
-var ProjectModel = Schema.ProjectModel;
+let StudentModel = Schema.StudentModel;
+let ProjectModel = Schema.ProjectModel;
 
 // First we clear the database of existing students and projects.
 StudentModel.remove({})
@@ -813,7 +813,7 @@ Validators are defined at the field level in a document, and are executed when t
 Example: Let's say you want to verify the existence of a username field and ensure that it is unique before you save the user document.
 
 ```js
-var StudentSchema = new Schema({
+let StudentSchema = new Schema({
   name: {
     type: String,
     unique: true,
@@ -830,7 +830,7 @@ var StudentSchema = new Schema({
 Continuing off the above example, to validate your email field, you would need to change your StudentSchema as follows:
 
 ```js
-var StudentSchema = new Schema({
+let StudentSchema = new Schema({
   name: {
     type: String,
     unique: true,
@@ -849,7 +849,7 @@ var StudentSchema = new Schema({
 * `enum`: helps to define a set of strings that are only available for that field value.
 
 ```js
-var StudentSchema = new Schema({
+let StudentSchema = new Schema({
   name: {
     type: String,
     unique: true,
@@ -878,7 +878,7 @@ This `validate` property value is typically an array consisting of a validation 
 For example, say that we want to validate the length of a user's password. To do so, you would have to make these changes in your StudentSchema:
 
 ```js
-var StudentSchema = new Schema({
+let StudentSchema = new Schema({
   ...
   password: {
     type: String,
@@ -922,20 +922,20 @@ Similar to how we use foreign keys to represent a one-to-many relationship in a 
 ```js
 // in the db/schema.js
 
-var ProjectSchema = new Schema({
+let ProjectSchema = new Schema({
   title: String,
   unit: String,
   students: [{type: Schema.ObjectId, ref: "Student"}]
 });
 
-var StudentSchema = new Schema({
+let StudentSchema = new Schema({
   name: String,
   age: Number,
   projects: [ {type: Schema.ObjectId, ref: "Project"}]
 });
 
-var StudentModel = mongoose.model("Student", StudentSchema);
-var ProjectModel = mongoose.model("Project", ProjectSchema);
+let StudentModel = mongoose.model("Student", StudentSchema);
+let ProjectModel = mongoose.model("Project", ProjectSchema);
 ```
 
 > Since we are using an Id to refer to other objects, we use the ObjectId type in the schema definition. The `ref` attribute must match the model used in the definition.
